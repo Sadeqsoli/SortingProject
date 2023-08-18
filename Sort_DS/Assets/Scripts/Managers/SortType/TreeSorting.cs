@@ -9,6 +9,8 @@ public class TreeSorting : MonoBehaviour, ISort
 
     Button sendingSortType;
 
+    Color Selected = _Color.G_SelectedGreen;
+    Color Deselected = _Color.G_DeselectedGreen;
     private void Start()
     {
         sendingSortType = GetComponent<Button>();
@@ -24,13 +26,13 @@ public class TreeSorting : MonoBehaviour, ISort
 
     public int[] Sort(int[] thaList)
     {
-        sendingSortType.image.color = _Color.Y_Olive;
+        sendingSortType.image.color = Selected;
         return new int[5] { 21, 22, 23, 24, 25 };
     }
 
     public void Deselect()
     {
-        sendingSortType.image.color = _Color.Y_LOlive;
+        sendingSortType.image.color = Deselected;
     }
 
     public SortType GetSortType()

@@ -8,8 +8,9 @@ public class MergeSorting : MonoBehaviour, ISort
     [SerializeField] SortType sortType;
 
     Button sendingSortType;
-    bool isDone = false;
 
+    Color Selected = _Color.G_SelectedGreen;
+    Color Deselected = _Color.G_DeselectedGreen;
 
     private void Start()
     {
@@ -61,6 +62,7 @@ public class MergeSorting : MonoBehaviour, ISort
     }
     int[] MergeSort(int[] thaList, int left, int right)
     {
+        var watch = System.Diagnostics.Stopwatch.StartNew();
         if (left < right)
         {
             int middle = left + (right - left) / 2;
@@ -70,13 +72,16 @@ public class MergeSorting : MonoBehaviour, ISort
 
             thaList = MergeArray(thaList, left, middle, right);
         }
-
+        watch.Stop();
+        Timer.passedTime = watch.ElapsedMilliseconds;
+        Debug.Log("MiliS: " + watch.ElapsedMilliseconds);
+        Debug.Log("Ticks: " + watch.ElapsedTicks);
         return thaList;
     }
     public int[] Sort(int[] thaList)
     {
         thaList = MergeSort(thaList, 0, thaList.Length - 1);
-        sendingSortType.image.color = _Color.Y_Olive;
+        sendingSortType.image.color = Selected;
         return thaList;
     }
 
@@ -84,7 +89,7 @@ public class MergeSorting : MonoBehaviour, ISort
 
     public void Deselect()
     {
-        sendingSortType.image.color = _Color.Y_LOlive;
+        sendingSortType.image.color = Deselected;
     }
 
     public SortType GetSortType()

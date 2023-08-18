@@ -9,6 +9,9 @@ public class SelectionSorting : MonoBehaviour, ISort
 
     Button sendingSortType;
 
+    Color Selected = _Color.G_SelectedGreen;
+    Color Deselected = _Color.G_DeselectedGreen;
+
     private void Start()
     {
         sendingSortType = GetComponent<Button>();
@@ -24,6 +27,7 @@ public class SelectionSorting : MonoBehaviour, ISort
 
     public int[] Sort(int[] thaList)
     {
+        var watch = System.Diagnostics.Stopwatch.StartNew();
         var listLength = thaList.Length;
         for (int i = 0; i < listLength -1; i++)
         {
@@ -39,12 +43,16 @@ public class SelectionSorting : MonoBehaviour, ISort
             thaList[min] = thaList[i];
             thaList[i] = tempVar;
         }
-        sendingSortType.image.color = _Color.Y_Olive;
+        watch.Stop();
+        Timer.passedTime = watch.ElapsedMilliseconds;
+        Debug.Log("MiliS: " + watch.ElapsedMilliseconds);
+        Debug.Log("Ticks: " + watch.ElapsedTicks);
+        sendingSortType.image.color = Selected;
         return thaList;
     }
     public void Deselect()
     {
-        sendingSortType.image.color = _Color.Y_LOlive;
+        sendingSortType.image.color = Deselected;
     }
 
     public SortType GetSortType()

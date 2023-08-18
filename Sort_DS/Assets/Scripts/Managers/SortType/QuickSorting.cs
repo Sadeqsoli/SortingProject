@@ -10,6 +10,9 @@ public class QuickSorting : MonoBehaviour, ISort
 
     Button sendingSortType;
 
+    Color Selected = _Color.G_SelectedGreen;
+    Color Deselected = _Color.G_DeselectedGreen;
+
     private void Start()
     {
         sendingSortType = GetComponent<Button>();
@@ -25,12 +28,13 @@ public class QuickSorting : MonoBehaviour, ISort
 
     public int[] Sort(int[] thaList)
     {
-        sendingSortType.image.color = _Color.Y_Olive;
+        sendingSortType.image.color = Selected;
         return QuickSort(thaList, 0, thaList.Length - 1);
     }
 
     int[] QuickSort(int[] thaList, int leftIndex = 0, int rightIndex = 0)
     {
+        var watch = System.Diagnostics.Stopwatch.StartNew();
         var i = leftIndex;
         var j = rightIndex;
         var pivot = thaList[leftIndex];
@@ -60,12 +64,18 @@ public class QuickSorting : MonoBehaviour, ISort
             QuickSort(thaList, leftIndex, j);
         if (i < rightIndex)
             QuickSort(thaList, i, rightIndex);
+
+        watch.Stop();
+        Timer.passedTime = watch.ElapsedMilliseconds;
+        Debug.Log("MiliS: " + watch.ElapsedMilliseconds);
+        Debug.Log("Ticks: " + watch.ElapsedTicks);
+
         return thaList;
     }
 
     public void Deselect()
     {
-        sendingSortType.image.color = _Color.Y_LOlive;
+        sendingSortType.image.color = Deselected;
     }
 
     public SortType GetSortType()

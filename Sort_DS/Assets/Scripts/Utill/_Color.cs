@@ -282,6 +282,29 @@ public static class _Color
             return superLightGreenColor;
         }
     }
+    
+    public static Color G_SelectedGreen
+    {
+        get
+        {
+            Color selectedGreenColor ;
+            if (ColorUtility.TryParseHtmlString("#81A900", out selectedGreenColor))
+            {
+            }
+            return selectedGreenColor;
+        }
+    }
+    public static Color G_DeselectedGreen
+    {
+        get
+        {
+            Color deselectedGreenColor ;
+            if (ColorUtility.TryParseHtmlString("#AFE500", out deselectedGreenColor))
+            {
+            }
+            return deselectedGreenColor;
+        }
+    }
 
 
 

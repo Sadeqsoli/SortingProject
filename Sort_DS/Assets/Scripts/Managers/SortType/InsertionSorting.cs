@@ -2,12 +2,14 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
-
 public class InsertionSorting : MonoBehaviour, ISort
 {
     [SerializeField] SortType sortType;
 
     Button sendingSortType;
+
+    Color Selected = _Color.G_SelectedGreen;
+    Color Deselected = _Color.G_DeselectedGreen;
 
     private void Start()
     {
@@ -24,6 +26,7 @@ public class InsertionSorting : MonoBehaviour, ISort
 
     public int[] Sort(int[] thaList)
     {
+        var watch = System.Diagnostics.Stopwatch.StartNew();
         var length = thaList.Length;
         for (int i = 1; i < length; i++)
         {
@@ -40,13 +43,19 @@ public class InsertionSorting : MonoBehaviour, ISort
                 else flag = 1;
             }
         }
-        sendingSortType.image.color = _Color.Y_Olive;
+        watch.Stop();
+
+        Timer.passedTime = watch.ElapsedMilliseconds;
+        Debug.Log("MiliS: " + watch.ElapsedMilliseconds);
+        Debug.Log("Ticks: " + watch.ElapsedTicks);
+
+        sendingSortType.image.color = Selected;
         return thaList;
     }
 
     public void Deselect()
     {
-        sendingSortType.image.color = _Color.Y_LOlive;
+        sendingSortType.image.color = Deselected;
     }
 
     public SortType GetSortType()

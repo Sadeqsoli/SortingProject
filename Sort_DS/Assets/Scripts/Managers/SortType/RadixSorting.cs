@@ -9,6 +9,8 @@ public class RadixSorting : MonoBehaviour, ISort
 
     Button sendingSortType;
 
+    Color Selected = _Color.G_SelectedGreen;
+    Color Deselected = _Color.G_DeselectedGreen;
     private void Start()
     {
         sendingSortType = GetComponent<Button>();
@@ -24,14 +26,20 @@ public class RadixSorting : MonoBehaviour, ISort
 
     public int[] Sort(int[] thaList)
     {
-        sendingSortType.image.color = _Color.Y_Olive;
+        sendingSortType.image.color = Selected;
         return RadixSort(thaList, thaList.Length);
     }
     public int[] RadixSort(int[] array, int size)
     {
+        var watch = System.Diagnostics.Stopwatch.StartNew();
         var maxVal = GetMaxVal(array, size);
         for (int exponent = 1; maxVal / exponent > 0; exponent *= 10)
             CountingSort(array, size, exponent);
+
+        watch.Stop();
+        Timer.passedTime = watch.ElapsedMilliseconds;
+        Debug.Log("MiliS: " + watch.ElapsedMilliseconds);
+        Debug.Log("Ticks: " + watch.ElapsedTicks);
         return array;
     }
     public static int GetMaxVal(int[] array, int size)
@@ -63,7 +71,7 @@ public class RadixSorting : MonoBehaviour, ISort
 
     public void Deselect()
     {
-        sendingSortType.image.color = _Color.Y_LOlive;
+        sendingSortType.image.color = Deselected;
     }
 
     public SortType GetSortType()

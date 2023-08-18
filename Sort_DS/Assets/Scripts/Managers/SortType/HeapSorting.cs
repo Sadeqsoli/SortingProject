@@ -9,6 +9,8 @@ public class HeapSorting : MonoBehaviour, ISort
 
     Button sendingSortType;
 
+    Color Selected = _Color.G_SelectedGreen;
+    Color Deselected = _Color.G_DeselectedGreen;
     private void Start()
     {
         sendingSortType = GetComponent<Button>();
@@ -24,11 +26,12 @@ public class HeapSorting : MonoBehaviour, ISort
 
     public int[] Sort(int[] thaList)
     {
-        sendingSortType.image.color = _Color.Y_Olive;
+        sendingSortType.image.color = Selected;
         return HeapSort(thaList, thaList.Length);
     }
     int[] HeapSort(int[] array, int size)
     {
+        var watch = System.Diagnostics.Stopwatch.StartNew();
         if (size <= 1)
             return array;
         for (int i = size / 2 - 1; i >= 0; i--)
@@ -42,6 +45,10 @@ public class HeapSorting : MonoBehaviour, ISort
             array[i] = tempVar;
             Heapify(array, i, 0);
         }
+        watch.Stop();
+        Timer.passedTime = watch.ElapsedMilliseconds;
+        Debug.Log("MiliS: " + watch.ElapsedMilliseconds);
+        Debug.Log("Ticks: " + watch.ElapsedTicks);
         return array;
     }
     void Heapify(int[] array, int size, int index)
@@ -67,7 +74,7 @@ public class HeapSorting : MonoBehaviour, ISort
     }
     public void Deselect()
     {
-        sendingSortType.image.color = _Color.Y_LOlive;
+        sendingSortType.image.color = Deselected;
     }
 
     public SortType GetSortType()
