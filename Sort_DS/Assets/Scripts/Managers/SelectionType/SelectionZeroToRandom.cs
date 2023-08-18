@@ -6,9 +6,9 @@ using UnityEngine.UI;
 
 public class SelectionZeroToRandom : MonoBehaviour, ISelection
 {
+    [SerializeField] TMP_InputField countInput;
     public SelectionType selectionType = SelectionType.ZeroToRandom;
     [SerializeField] TextMeshProUGUI WarningTXT;
-    [SerializeField] short _mCountSelection = 100;
     short minNumb = 0;
     short maxNumb = 5000;
     Button ChoosingSelctionBTN;
@@ -30,20 +30,47 @@ public class SelectionZeroToRandom : MonoBehaviour, ISelection
     }
     public bool SelectingNumbers()
     {
-        var zeroToRandom = new NumbSelection(_mCountSelection, minNumb, maxNumb);
+        if (string.IsNullOrEmpty(countInput.text))
+        {
+            LogWarnings("Input for count number is Empty!", _Color.R_DRed);
+            countInput.targetGraphic.color = _Color.R_SLRed;
+            return false;
+        }
+        short countNumber = -1;
+        if (!short.TryParse(this.countInput.text, out countNumber))
+        {
+            LogWarnings("Couldn't parse Count Input Number, Try again!", _Color.R_DRed);
+            countInput.targetGraphic.color = _Color.R_SLRed;
+            return false;
+        }
+        if (countNumber < 100)
+        {
+            LogWarnings("write atleast 100 for the sake of this test!", _Color.R_DRed);
+            countInput.targetGraphic.color = _Color.R_SLRed;
+            return false;
+        }
+        var difference = maxNumb - minNumb;
+        if (countNumber > difference)
+        {
+            LogWarnings("Count number is bigger than the chosen domain!", _Color.R_DRed);
+            countInput.targetGraphic.color = _Color.R_SLRed;
+            return false;
+        }
+        var zeroToRandom = new NumbSelection(countNumber, minNumb, maxNumb);
         if (zeroToRandom != null)
         {
             EventManager.NumberSelectionEvent?.Invoke(zeroToRandom);
         }
         else
         {
-            Debug.Log("NumbSelction is Null!");
+            LogWarnings("Number Selction is Null!", _Color.R_DRed);
             return false;
         }
         Debug.Log("Count: " + zeroToRandom.Count);
         Debug.Log("Min: " + zeroToRandom.Min);
         Debug.Log("Max: " + zeroToRandom.Max);
         ChoosingSelctionIMG.color = _Color.Y_LOlive;
+        countInput.targetGraphic.color = _Color.G_SLGreen;
         LogWarnings("We have the right selection!", Color.black);
         return true;
     }
@@ -52,6 +79,7 @@ public class SelectionZeroToRandom : MonoBehaviour, ISelection
     {
         WarningTXT.text = warning;
         WarningTXT.color = color;
+        ChoosingSelctionIMG.color = _Color.WB_SLGray;
     }
 
 
@@ -59,6 +87,7 @@ public class SelectionZeroToRandom : MonoBehaviour, ISelection
     {
         WarningTXT.text = "";
         ChoosingSelctionIMG.color = _Color.WB_SLGray;
+        countInput.targetGraphic.color = _Color.BaseWhite;
         minNumb = 0;
         maxNumb = 5000;
     }

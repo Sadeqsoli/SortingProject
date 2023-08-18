@@ -21,12 +21,12 @@ public class SelectionManager : MonoBehaviour
 
     private void GetNumberSelection(NumbSelection selection)
     {
-        var listOfRandomNumbers = MathGen.GenerateRandom(selection.Count, selection.Min, selection.Max);
+        var listOfRandomNumbers = MathGen.GenerateRandom(selection.Count, selection.Min, selection.Max).ToArray();
         AddNumbersButton.onClick.RemoveAllListeners();
-        AddNumbersButton.onClick.AddListener(()=> SendingGeneratedRandomNumbers(listOfRandomNumbers));
+        AddNumbersButton.onClick.AddListener(() => SendingGeneratedRandomNumbers(listOfRandomNumbers));
     }
 
-    void SendingGeneratedRandomNumbers(List<int> ListOfUnsortedNumbers)
+    void SendingGeneratedRandomNumbers(int[] ListOfUnsortedNumbers)
     {
         _mSortingPanel.SetActive(true);
         EventManager.ListSenderEvent?.Invoke(ListOfUnsortedNumbers);
@@ -48,9 +48,10 @@ public class SelectionManager : MonoBehaviour
             if (i == targetSelection)
             {
                 if (selection.SelectingNumbers())
-                {
                     AddNumbersButton.interactable = true;
-                }
+                else
+                    AddNumbersButton.interactable = false;
+
             }
             else
             {
