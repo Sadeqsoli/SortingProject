@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -8,8 +9,8 @@ public class InsertionSorting : MonoBehaviour, ISort
 
     Button sendingSortType;
 
-    Color Selected = _Color.G_SelectedGreen;
-    Color Deselected = _Color.G_DeselectedGreen;
+    Color Selected = _Color.G_Selected;
+    Color Deselected = _Color.G_Deselected;
 
     private void Start()
     {
@@ -26,28 +27,35 @@ public class InsertionSorting : MonoBehaviour, ISort
 
     public int[] Sort(int[] thaList)
     {
-        var watch = System.Diagnostics.Stopwatch.StartNew();
-        var length = thaList.Length;
-        for (int i = 1; i < length; i++)
+        try
         {
-            var key = thaList[i];
-            var flag = 0;
-            for (int j = i - 1; j >= 0 && flag != 1;)
+            var length = thaList.Length;
+            for (int i = 1; i < length; i++)
             {
-                if (key < thaList[j])
+                var key = thaList[i];
+                var flag = 0;
+                for (int j = i - 1; j >= 0 && flag != 1;)
                 {
-                    thaList[j + 1] = thaList[j];
-                    j--;
-                    thaList[j + 1] = key;
+                    if (key < thaList[j])
+                    {
+                        thaList[j + 1] = thaList[j];
+                        j--;
+                        thaList[j + 1] = key;
+                    }
+                    else flag = 1;
                 }
-                else flag = 1;
             }
         }
-        watch.Stop();
-
-        Timer.passedTime = watch.ElapsedMilliseconds;
-        Debug.Log("MiliS: " + watch.ElapsedMilliseconds);
-        Debug.Log("Ticks: " + watch.ElapsedTicks);
+        catch (StackOverflowException e)
+        {
+            EventManager.ReportSenderEvent?.Invoke(ReportType.Error, "SOF: Too many, use another sorting algorithm!");
+            Debug.Log("Error: " + e.Message);
+        }
+        catch (Exception e)
+        {
+            EventManager.ReportSenderEvent?.Invoke(ReportType.Error, "Unknown: " + e.Message);
+            Debug.Log("Error: " + e.Message);
+        }
 
         sendingSortType.image.color = Selected;
         return thaList;

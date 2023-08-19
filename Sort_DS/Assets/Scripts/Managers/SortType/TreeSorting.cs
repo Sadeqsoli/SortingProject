@@ -9,8 +9,8 @@ public class TreeSorting : MonoBehaviour, ISort
 
     Button sendingSortType;
 
-    Color Selected = _Color.G_SelectedGreen;
-    Color Deselected = _Color.G_DeselectedGreen;
+    Color Selected = _Color.G_Selected;
+    Color Deselected = _Color.G_Deselected;
     private void Start()
     {
         sendingSortType = GetComponent<Button>();

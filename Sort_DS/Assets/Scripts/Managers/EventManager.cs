@@ -8,4 +8,5 @@ public class EventManager
     public static UnityEvent<ISelection> SelectionSenderEvent = new UnityEvent<ISelection>();
     public static UnityEvent<int[]> ListSenderEvent = new UnityEvent<int[]>();
     public static UnityEvent<ISort> SortSenderEvent = new UnityEvent<ISort>();
+    public static UnityEvent<ReportType,string> ReportSenderEvent = new UnityEvent<ReportType,string>();
 }

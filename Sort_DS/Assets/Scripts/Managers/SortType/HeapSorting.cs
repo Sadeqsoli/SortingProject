@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -9,8 +10,8 @@ public class HeapSorting : MonoBehaviour, ISort
 
     Button sendingSortType;
 
-    Color Selected = _Color.G_SelectedGreen;
-    Color Deselected = _Color.G_DeselectedGreen;
+    Color Selected = _Color.G_Selected;
+    Color Deselected = _Color.G_Deselected;
     private void Start()
     {
         sendingSortType = GetComponent<Button>();
@@ -31,24 +32,32 @@ public class HeapSorting : MonoBehaviour, ISort
     }
     int[] HeapSort(int[] array, int size)
     {
-        var watch = System.Diagnostics.Stopwatch.StartNew();
-        if (size <= 1)
-            return array;
-        for (int i = size / 2 - 1; i >= 0; i--)
+        try
         {
-            Heapify(array, size, i);
+            if (size <= 1)
+                return array;
+            for (int i = size / 2 - 1; i >= 0; i--)
+            {
+                Heapify(array, size, i);
+            }
+            for (int i = size - 1; i >= 0; i--)
+            {
+                var tempVar = array[0];
+                array[0] = array[i];
+                array[i] = tempVar;
+                Heapify(array, i, 0);
+            }
         }
-        for (int i = size - 1; i >= 0; i--)
+        catch (StackOverflowException e)
         {
-            var tempVar = array[0];
-            array[0] = array[i];
-            array[i] = tempVar;
-            Heapify(array, i, 0);
+            EventManager.ReportSenderEvent?.Invoke(ReportType.Error, "SOF: Too many, use another sorting algorithm!");
+            Debug.Log("Error: " + e.Message);
         }
-        watch.Stop();
-        Timer.passedTime = watch.ElapsedMilliseconds;
-        Debug.Log("MiliS: " + watch.ElapsedMilliseconds);
-        Debug.Log("Ticks: " + watch.ElapsedTicks);
+        catch (Exception e)
+        {
+            EventManager.ReportSenderEvent?.Invoke(ReportType.Error, "Unknown: " + e.Message);
+            Debug.Log("Error: " + e.Message);
+        }
         return array;
     }
     void Heapify(int[] array, int size, int index)

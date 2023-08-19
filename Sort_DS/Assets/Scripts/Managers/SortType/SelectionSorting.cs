@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -9,8 +10,8 @@ public class SelectionSorting : MonoBehaviour, ISort
 
     Button sendingSortType;
 
-    Color Selected = _Color.G_SelectedGreen;
-    Color Deselected = _Color.G_DeselectedGreen;
+    Color Selected = _Color.G_Selected;
+    Color Deselected = _Color.G_Deselected;
 
     private void Start()
     {
@@ -27,26 +28,34 @@ public class SelectionSorting : MonoBehaviour, ISort
 
     public int[] Sort(int[] thaList)
     {
-        var watch = System.Diagnostics.Stopwatch.StartNew();
-        var listLength = thaList.Length;
-        for (int i = 0; i < listLength -1; i++)
+        try
         {
-            var min = i;
-            for (int j = i + 1; j < listLength; j++)
+            var listLength = thaList.Length;
+            for (int i = 0; i < listLength - 1; i++)
             {
-                if (thaList[j] < thaList[min])
+                var min = i;
+                for (int j = i + 1; j < listLength; j++)
                 {
-                    min = j;
+                    if (thaList[j] < thaList[min])
+                    {
+                        min = j;
+                    }
                 }
+                var tempVar = thaList[min];
+                thaList[min] = thaList[i];
+                thaList[i] = tempVar;
             }
-            var tempVar = thaList[min];
-            thaList[min] = thaList[i];
-            thaList[i] = tempVar;
         }
-        watch.Stop();
-        Timer.passedTime = watch.ElapsedMilliseconds;
-        Debug.Log("MiliS: " + watch.ElapsedMilliseconds);
-        Debug.Log("Ticks: " + watch.ElapsedTicks);
+        catch (StackOverflowException e)
+        {
+            EventManager.ReportSenderEvent?.Invoke(ReportType.Error, "SOF: Too many, use another sorting algorithm!");
+            Debug.Log("Error: " + e.Message);
+        }
+        catch (Exception e)
+        {
+            EventManager.ReportSenderEvent?.Invoke(ReportType.Error, "Unknown: " + e.Message);
+            Debug.Log("Error: " + e.Message);
+        }
         sendingSortType.image.color = Selected;
         return thaList;
     }

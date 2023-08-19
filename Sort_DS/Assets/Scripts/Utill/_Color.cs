@@ -283,23 +283,34 @@ public static class _Color
         }
     }
     
-    public static Color G_SelectedGreen
+    public static Color G_Selected
     {
         get
         {
             Color selectedGreenColor ;
-            if (ColorUtility.TryParseHtmlString("#81A900", out selectedGreenColor))
+            if (ColorUtility.TryParseHtmlString("#DDBD00", out selectedGreenColor))
             {
             }
             return selectedGreenColor;
         }
     }
-    public static Color G_DeselectedGreen
+    public static Color G_Deselected
     {
         get
         {
             Color deselectedGreenColor ;
-            if (ColorUtility.TryParseHtmlString("#AFE500", out deselectedGreenColor))
+            if (ColorUtility.TryParseHtmlString("#FF8100", out deselectedGreenColor))
+            {
+            }
+            return deselectedGreenColor;
+        }
+    }
+    public static Color G_Numbers
+    {
+        get
+        {
+            Color deselectedGreenColor ;
+            if (ColorUtility.TryParseHtmlString("#31BAFD", out deselectedGreenColor))
             {
             }
             return deselectedGreenColor;

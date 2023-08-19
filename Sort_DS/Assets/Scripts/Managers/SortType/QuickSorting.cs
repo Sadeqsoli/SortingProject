@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Assertions;
 using UnityEngine.UI;
+using System;
 
 public class QuickSorting : MonoBehaviour, ISort
 {
@@ -10,8 +11,8 @@ public class QuickSorting : MonoBehaviour, ISort
 
     Button sendingSortType;
 
-    Color Selected = _Color.G_SelectedGreen;
-    Color Deselected = _Color.G_DeselectedGreen;
+    Color Selected = _Color.G_Selected;
+    Color Deselected = _Color.G_Deselected;
 
     private void Start()
     {
@@ -25,51 +26,58 @@ public class QuickSorting : MonoBehaviour, ISort
     {
         EventManager.SortSenderEvent?.Invoke(this);
     }
-
     public int[] Sort(int[] thaList)
     {
+
         sendingSortType.image.color = Selected;
-        return QuickSort(thaList, 0, thaList.Length - 1);
+        var sorted = QuickSort(thaList, 0, thaList.Length - 1);
+        return sorted;
     }
 
     int[] QuickSort(int[] thaList, int leftIndex = 0, int rightIndex = 0)
     {
-        var watch = System.Diagnostics.Stopwatch.StartNew();
-        var i = leftIndex;
-        var j = rightIndex;
-        var pivot = thaList[leftIndex];
-
-        while (i <= j)
+        try
         {
-            while (thaList[i] < pivot)
+            var i = leftIndex;
+            var j = rightIndex;
+            var pivot = thaList[leftIndex];
+
+            while (i <= j)
             {
-                i++;
+                while (thaList[i] < pivot)
+                {
+                    i++;
+                }
+
+                while (thaList[j] > pivot)
+                {
+                    j--;
+                }
+                if (i <= j)
+                {
+                    int temp = thaList[i];
+                    thaList[i] = thaList[j];
+                    thaList[j] = temp;
+                    i++;
+                    j--;
+                }
             }
 
-            while (thaList[j] > pivot)
-            {
-                j--;
-            }
-            if (i <= j)
-            {
-                int temp = thaList[i];
-                thaList[i] = thaList[j];
-                thaList[j] = temp;
-                i++;
-                j--;
-            }
+            if (leftIndex < j)
+                QuickSort(thaList, leftIndex, j);
+            if (i < rightIndex)
+                QuickSort(thaList, i, rightIndex);
         }
-
-        if (leftIndex < j)
-            QuickSort(thaList, leftIndex, j);
-        if (i < rightIndex)
-            QuickSort(thaList, i, rightIndex);
-
-        watch.Stop();
-        Timer.passedTime = watch.ElapsedMilliseconds;
-        Debug.Log("MiliS: " + watch.ElapsedMilliseconds);
-        Debug.Log("Ticks: " + watch.ElapsedTicks);
-
+        catch (StackOverflowException e)
+        {
+            EventManager.ReportSenderEvent?.Invoke(ReportType.Error,"SOF: Too many, use another sorting algorithm!");
+            Debug.Log("Error: " + e.Message);
+        }
+        catch (Exception e)
+        {
+            EventManager.ReportSenderEvent?.Invoke(ReportType.Error, "Unknown: " + e.Message);
+            Debug.Log("Error: " + e.Message);
+        }
         return thaList;
     }
 
@@ -84,3 +92,4 @@ public class QuickSorting : MonoBehaviour, ISort
     }
 
 }//EndClassss
+

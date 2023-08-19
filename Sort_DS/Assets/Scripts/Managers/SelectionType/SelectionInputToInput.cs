@@ -34,6 +34,7 @@ public class SelectionInputToInput : MonoBehaviour, ISelection
         {
             LogWarnings("Input for count number is Empty!", _Color.R_DRed);
             countInput.targetGraphic.color = _Color.R_SLRed;
+            countInput.Select();
             return false;
         }
         short countNumber = -1;
@@ -53,12 +54,14 @@ public class SelectionInputToInput : MonoBehaviour, ISelection
         {
             LogWarnings("Input for min number is Empty!", _Color.R_DRed);
             minInput.targetGraphic.color = _Color.R_SLRed;
+            minInput.Select();
             return false;
         }
         if (string.IsNullOrEmpty(maxInput.text))
         {
             LogWarnings("Input for max number is Empty!", _Color.R_DRed);
             maxInput.targetGraphic.color = _Color.R_SLRed;
+            maxInput.Select();
             return false;
         }
         short maxNumb = -1;
@@ -82,6 +85,7 @@ public class SelectionInputToInput : MonoBehaviour, ISelection
         {
             LogWarnings("Count number is bigger than the chosen domain!", _Color.R_DRed);
             countInput.targetGraphic.color = _Color.R_SLRed;
+            countInput.Select();
             return false;
         }
         var inputToInput = new NumbSelection(countNumber, minNumb, maxNumb);

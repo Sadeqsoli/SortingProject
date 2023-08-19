@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -9,8 +10,8 @@ public class RadixSorting : MonoBehaviour, ISort
 
     Button sendingSortType;
 
-    Color Selected = _Color.G_SelectedGreen;
-    Color Deselected = _Color.G_DeselectedGreen;
+    Color Selected = _Color.G_Selected;
+    Color Deselected = _Color.G_Deselected;
     private void Start()
     {
         sendingSortType = GetComponent<Button>();
@@ -31,15 +32,22 @@ public class RadixSorting : MonoBehaviour, ISort
     }
     public int[] RadixSort(int[] array, int size)
     {
-        var watch = System.Diagnostics.Stopwatch.StartNew();
-        var maxVal = GetMaxVal(array, size);
-        for (int exponent = 1; maxVal / exponent > 0; exponent *= 10)
-            CountingSort(array, size, exponent);
-
-        watch.Stop();
-        Timer.passedTime = watch.ElapsedMilliseconds;
-        Debug.Log("MiliS: " + watch.ElapsedMilliseconds);
-        Debug.Log("Ticks: " + watch.ElapsedTicks);
+        try
+        {
+            var maxVal = GetMaxVal(array, size);
+            for (int exponent = 1; maxVal / exponent > 0; exponent *= 10)
+                CountingSort(array, size, exponent);
+        }
+        catch (StackOverflowException e)
+        {
+            EventManager.ReportSenderEvent?.Invoke(ReportType.Error, "SOF: Too many, use another sorting algorithm!");
+            Debug.Log("Error: " + e.Message);
+        }
+        catch (Exception e)
+        {
+            EventManager.ReportSenderEvent?.Invoke(ReportType.Error, "Unknown: " + e.Message);
+            Debug.Log("Error: " + e.Message);
+        }
         return array;
     }
     public static int GetMaxVal(int[] array, int size)

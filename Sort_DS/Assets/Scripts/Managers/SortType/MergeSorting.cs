@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -9,8 +10,8 @@ public class MergeSorting : MonoBehaviour, ISort
 
     Button sendingSortType;
 
-    Color Selected = _Color.G_SelectedGreen;
-    Color Deselected = _Color.G_DeselectedGreen;
+    Color Selected = _Color.G_Selected;
+    Color Deselected = _Color.G_Deselected;
 
     private void Start()
     {
@@ -24,7 +25,7 @@ public class MergeSorting : MonoBehaviour, ISort
     {
         EventManager.SortSenderEvent?.Invoke(this);
     }
-    
+
     int[] MergeArray(int[] thaList, int left, int middle, int right)
     {
         var leftArrayLength = middle - left + 1;
@@ -62,20 +63,28 @@ public class MergeSorting : MonoBehaviour, ISort
     }
     int[] MergeSort(int[] thaList, int left, int right)
     {
-        var watch = System.Diagnostics.Stopwatch.StartNew();
-        if (left < right)
+        try
         {
-            int middle = left + (right - left) / 2;
+            if (left < right)
+            {
+                int middle = left + (right - left) / 2;
 
-            MergeSort(thaList, left, middle);
-            MergeSort(thaList, middle + 1, right);
+                MergeSort(thaList, left, middle);
+                MergeSort(thaList, middle + 1, right);
 
-            thaList = MergeArray(thaList, left, middle, right);
+                thaList = MergeArray(thaList, left, middle, right);
+            }
         }
-        watch.Stop();
-        Timer.passedTime = watch.ElapsedMilliseconds;
-        Debug.Log("MiliS: " + watch.ElapsedMilliseconds);
-        Debug.Log("Ticks: " + watch.ElapsedTicks);
+        catch (StackOverflowException e)
+        {
+            EventManager.ReportSenderEvent?.Invoke(ReportType.Error, "SOF: Too many, use another sorting algorithm!");
+            Debug.Log("Error: " + e.Message);
+        }
+        catch (Exception e)
+        {
+            EventManager.ReportSenderEvent?.Invoke(ReportType.Error, "Unknown: " + e.Message);
+            Debug.Log("Error: " + e.Message);
+        }
         return thaList;
     }
     public int[] Sort(int[] thaList)
@@ -85,7 +94,7 @@ public class MergeSorting : MonoBehaviour, ISort
         return thaList;
     }
 
-    
+
 
     public void Deselect()
     {

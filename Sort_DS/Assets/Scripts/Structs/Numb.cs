@@ -18,6 +18,6 @@ public class Numb : MonoBehaviour
         Number = numb;
         numberTXT.text = numb.ToString();
         numberTXT.color = Color.black;
-        numberIMG.color = _Color.Y_LOlive;
+        numberIMG.color = _Color.G_Numbers;
     }
 }

@@ -34,6 +34,7 @@ public class SelectionZeroToRandom : MonoBehaviour, ISelection
         {
             LogWarnings("Input for count number is Empty!", _Color.R_DRed);
             countInput.targetGraphic.color = _Color.R_SLRed;
+            countInput.Select();
             return false;
         }
         short countNumber = -1;
@@ -54,6 +55,7 @@ public class SelectionZeroToRandom : MonoBehaviour, ISelection
         {
             LogWarnings("Count number is bigger than the chosen domain!", _Color.R_DRed);
             countInput.targetGraphic.color = _Color.R_SLRed;
+            countInput.Select();
             return false;
         }
         var zeroToRandom = new NumbSelection(countNumber, minNumb, maxNumb);
@@ -69,9 +71,9 @@ public class SelectionZeroToRandom : MonoBehaviour, ISelection
         Debug.Log("Count: " + zeroToRandom.Count);
         Debug.Log("Min: " + zeroToRandom.Min);
         Debug.Log("Max: " + zeroToRandom.Max);
-        ChoosingSelctionIMG.color = _Color.Y_LOlive;
         countInput.targetGraphic.color = _Color.G_SLGreen;
         LogWarnings("We have the right selection!", Color.black);
+        ChoosingSelctionIMG.color = _Color.Y_LOlive;
         return true;
     }
 
