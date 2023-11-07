@@ -1,2 +1,2 @@
 # SortingProject
-This is super simple project for displaying different type of sort algorithms.
+This is a super simple project for displaying different type of sort algorithms.
