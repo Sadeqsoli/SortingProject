@@ -59,23 +59,3 @@ sysinfo.txt
 # Crashlytics generated file
 crashlytics-build.properties
 
-Assetbundles/
-Broca/Assets/UI_Sprite/MapArt/LayerTest/
-Broca/Assets/UI_Sprite/MapArt/LayerSimiFinal/
-Broca/Assets/Video/
-Broca/Assets/Resources/Video-TakingATaxi_L1.mp4
-Broca/Assets/Resources/Video-TakingATaxi_L1.mp4.meta
-Broca/Library-Android/
-AndroidKeystore/
-Export/
-Pelleh/Assets/UI_Sprite/MapArt/MapLayerFinal/00-Background.png,Pelleh/Assets/UI_Sprite/MapArt/MapLayerFinal/00-Background.png.meta,Pelleh/Assets/UI_Sprite/MapArt/MapLayerFinal/02-JungleGeneral.png,Pelleh/Assets/UI_Sprite/MapArt/MapLayerFinal/02-JungleGeneral.png.meta,Pelleh/Assets/UI_Sprite/MapArt/MapLayerFinal/RailRoadBridgeFG.png,Pelleh/Assets/UI_Sprite/MapArt/MapLayerFinal/RailRoadBridgeFG.png.meta
-Broca/Assets/Plugins/Android/MyketIAB.jar
-Broca/Assets/Plugins/Android/MyketIAB.jar.meta
-Pelleh/Packages/manifest.json
-Pelleh/ProjectSettings/AndroidResolverDependencies.xml
-Pelleh/ProjectSettings/GvhProjectSettings.xml
-Pelleh/UserSettings/EditorUserSettings.asset
-Pelleh/Assets/AddressableAssetsData/Android/addressables_content_state.bin
-
-Pelleh_WebGL/
-Pelleh/Assets/AddressableAssetsData/link.xml
