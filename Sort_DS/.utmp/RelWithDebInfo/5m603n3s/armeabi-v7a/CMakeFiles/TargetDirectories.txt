@@ -1,0 +1,5 @@
+E:/Unity/Git/University/SortingProject/Sort_DS/.utmp/RelWithDebInfo/5m603n3s/armeabi-v7a/CMakeFiles/edit_cache.dir
+E:/Unity/Git/University/SortingProject/Sort_DS/.utmp/RelWithDebInfo/5m603n3s/armeabi-v7a/CMakeFiles/rebuild_cache.dir
+E:/Unity/Git/University/SortingProject/Sort_DS/.utmp/RelWithDebInfo/5m603n3s/armeabi-v7a/FramePacing/CMakeFiles/swappywrapper.dir
+E:/Unity/Git/University/SortingProject/Sort_DS/.utmp/RelWithDebInfo/5m603n3s/armeabi-v7a/FramePacing/CMakeFiles/edit_cache.dir
+E:/Unity/Git/University/SortingProject/Sort_DS/.utmp/RelWithDebInfo/5m603n3s/armeabi-v7a/FramePacing/CMakeFiles/rebuild_cache.dir
